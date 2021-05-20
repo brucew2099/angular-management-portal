@@ -1,1 +1,64 @@
-/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/_theming.scss';
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~@angular/material/theming";
+
+@include mat-core();
+
+body,
+html {
+	margin: 0 auto;
+	height: 100% !important;
+}
+
+.footer {
+  height: 88vh;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.icon {
+  display: inline-block;
+  height: 30px;
+  margin: 0 auto;
+  padding-right: 5px;
+  text-align: center;
+  vertical-align: middle;
+  width: 15%;
+}
+
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker hue.
+.app-theme1-theme {
+	$my-app-primary: mat-palette($mat-grey, 100);
+	$my-app-accent: mat-palette($mat-grey, 500);
+  $my-app-warn: mat-palette($mat-grey, 900);
+	// Create the theme object (a Sass map containing all of the palettes).
+	$my-app-theme: mat-light-theme($my-app-primary, $my-app-accent, $my-app-warn);
+  // Include theme styles for core and each component used in your app.
+  // Alternatively, you can import and @include the theme mixins for each component
+  // that you are using.
+  @include angular-material-theme($my-app-theme);
+}
+
+.app-theme2-theme {
+  $alternate-primary: mat-palette($mat-indigo, 100);
+  $alternate-accent: mat-palette($mat-indigo, 500);
+  $alternate-warn: mat-palette($mat-indigo, 900);
+  $alternate-theme: mat-light-theme($alternate-primary, $alternate-accent, $alternate-warn);
+  @include angular-material-theme($alternate-theme);
+}
+
+.app-theme3-theme {
+  $my-third-primary: mat-palette($mat-blue-grey);
+  $my-third-accent:  mat-palette($mat-pink, 500, 900, A100);
+  $my-third-warn:    mat-palette($mat-deep-orange);
+  $my-third-theme: mat-light-theme($my-third-primary, $my-third-accent, $my-third-warn);
+  @include angular-material-theme($my-third-theme);
+}

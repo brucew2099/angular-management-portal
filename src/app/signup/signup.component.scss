@@ -1,0 +1,23 @@
+@import '../../variables';
+
+#login-card {
+  max-width: 240px;
+  margin: 8% auto;
+}
+
+h2 {
+  color: $secondary;
+  margin-left: 2.7em;
+  margin-bottom: 1em;
+}
+
+button {
+  width: 100%;
+}
+
+.form-wrapper {
+  min-width: 40%;
+  margin-bottom: 10%;
+  border: 2px solid $light-gray;
+  padding: 1em 2em;
+}
