@@ -10,8 +10,16 @@ html {
 	height: 100% !important;
 }
 
-.footer {
-  height: 88vh;
+button {
+  width: 100%;
+
+  &.btn {
+    border-radius: 0;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
 }
 
 .align-center {
@@ -22,6 +30,10 @@ html {
   width: 100%;
 }
 
+.half-width {
+  width: 48%;
+}
+
 .icon {
   display: inline-block;
   height: 30px;
@@ -30,6 +42,16 @@ html {
   text-align: center;
   vertical-align: middle;
   width: 15%;
+}
+
+.help-icon {
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.error {
+  color: red;
 }
 
 

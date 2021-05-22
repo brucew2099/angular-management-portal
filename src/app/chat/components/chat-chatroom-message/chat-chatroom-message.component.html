@@ -1,0 +1,9 @@
+<div class="chat-message">
+  <img [src]="Message.Sender.PhotoUrl" class="rounded-circle">
+  <div class="bubble d-flex flex-column">
+    <div class="name">
+      {{Message.Sender.FirstName}} {{Message.Sender.LastName}}
+    </div>
+    <small class="timestamp">{{Message.CreatedAt | date:'medium'}}</small>
+    <div class="message">{{Message.Message}}</div>
+  </div>

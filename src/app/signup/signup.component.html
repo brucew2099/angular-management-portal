@@ -1,24 +1,80 @@
-<div class="container form-wrapper">
-  <mat-card id="login-card">
-    <mat-card-header >
-      <h2>Signup</h2>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="signupForm" (submit)="submit()" novalidate>
-        <mat-form-field class="full-width">
-          <input matInput type="email" id="email-input"
-            placeholder="Enter Email" formControlName="Email" required>
-        </mat-form-field>
-        <mat-form-field class="full-width">
-          <input matInput [type]="hide ? 'password' : 'text'" id="password-input"
-            placeholder="Enter Password" formControlName="Password" required>
-          <button mat-icon-button matSuffix (click)="hide=!hide" [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide" required inline>
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-        </mat-form-field>
-        <button mat-raised-button type="submit" color="primary" [disabled]="!signupForm.valid">Signup</button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+<div id="error-message" *ngIf="hasError">
+  <h3>{{errorMessage}}</h3>
 </div>
+<mat-card id="signup-card">
+  <mat-card-header >
+    <h2>Sign Up</h2>
+    <mat-icon class="material-icons help-icon" (click)="openDialog();" title="Password Help">help</mat-icon>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="signupForm" (submit)="submit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput type="email" id="email-input"
+          placeholder="Enter Email" formControlName="Email" required>
+          <mat-error *ngIf="f.Email.touched && f.Email.invalid">
+            <span class="error">
+              {{getEmailErrorMessage()}}
+            </span>
+          </mat-error>
+      </mat-form-field>
+      <br/><br/>
+      <span>
+        <mat-form-field appearance="outline" class="half-width firstname-input">
+          <input matInput type="text" placeholder="Enter First Name" formControlName="FirstName" required>
+            <mat-error *ngIf="f.FirstName.touched && f.FirstName.invalid">
+              <span class="error">
+                {{getFirstNameErrorMessage()}}
+              </span>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="half-width lastname-input">
+          <input matInput type="text" placeholder="Enter Last Name" formControlName="LastName" required>
+            <mat-error *ngIf="f.LastName.touched && f.LastName.invalid">
+              <span class="error">
+                {{getLastNameErrorMessage()}}
+              </span>
+            </mat-error>
+        </mat-form-field>
+      </span>
+      <br/><br/>
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput [type]="hide ? 'password' : 'text'" id="password-input"
+          placeholder="Enter Password" formControlName="Password" required>
+        <button mat-icon-button matSuffix (click)="hide=!hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide" required inline>
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="f.Password.touched && f.Password.invalid">
+          <span class="error">
+            {{getPasswordErrorMessage()}}
+            <span *ngIf="!f.Password.errors?.required">
+              <mat-icon class="material-icons">help</mat-icon>
+              on top.
+            </span>
+          </span>
+        </mat-error>
+      </mat-form-field>
+      <br/><br/>
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput [type]="hidec ? 'password' : 'text'" id="confirmed-input"
+          placeholder="Enter Confirmed Password" formControlName="Confirmed" required>
+        <button mat-icon-button matSuffix (click)="hidec=!hidec" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hidec" required inline>
+        <mat-icon>{{hidec ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="f.Confirmed.touched && f.Confirmed.invalid">
+          <span class="error">
+            {{getConfirmedErrorMessage()}}
+            <span *ngIf="!f.Confirmed.errors?.required">
+              <mat-icon class="material-icons">help</mat-icon>
+              on top.
+            </span>
+          </span>
+        </mat-error>
+      </mat-form-field>
+      <br/><br/>
+      <button mat-raised-button type="submit" color="primary" [disabled]="!signupForm.valid">Signup</button>
+    </form>
+  </mat-card-content>
+  <small><a [routerLink]="'/login'">Already have an Account?</a></small>
+</mat-card>

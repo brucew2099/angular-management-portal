@@ -1,0 +1,43 @@
+<div class="container form-wrapper">
+  <form [formGroup]="summaryForm">
+    <div class="full-width">
+      <span><strong>{{Role}}</strong></span>
+    </div>
+    <div><i class="fa fa-user fa-5x"></i></div>
+    <div>{{ Username }}</div>
+    <h4>TEAM SUMMARY</h4>
+    <div>{{ NoOfTeamMembers }}</div>
+    <div>{{ TotalCostOfAllProjects }}</div>
+    <div>{{ PendingTasks }}</div>
+    <div>{{ UpcomingProjects }}</div>
+    <h4>CLIENTS</h4>
+    <mat-card>
+      <mat-card-content class="client-table">
+        <table mat-table [dataSource]="Clients" class="mat-elevation-z8 list-table">
+          <ng-container matColumnDef="Name">
+            <th mat-header-cell *matHeaderCellDef> COMPANY NAME </th>
+            <td mat-cell *matCellDef="let client"> {{client.name}} </td>
+          </ng-container>
+          <!-- <ng-container matColumnDef="Item">
+            <th mat-header-cell *matHeaderCellDef> Item </th>
+            <td mat-cell *matCellDef="let todo" (click)="editTodo(todo)"> {{todo.Item}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Importance">
+            <th mat-header-cell *matHeaderCellDef> Priority </th>
+            <td mat-cell *matCellDef="let todo" (click)="editTodo(todo)"> {{todo.Importance}} </td>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let todo">
+              <button mat-raise-button (click)="removeTodo(todo)" color="danger">Delete</button>
+            </td>
+          </ng-container> -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <br/>
+        <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+      </mat-card-content>
+  </mat-card>
+  </form>
+</div>

@@ -1,48 +1,13 @@
-<mat-toolbar>
-  <mat-toolbar-row>
-    <span><a mat-button (click)="breadCrumbMain();">Home</a></span>
-    <span *ngFor="let m of menuHeaders; let ind = index">
-      <a mat-button (click)="breadCrumb(menuHeaders, ind)" >
-        {{ m.label }}
-        <!-- <mat-icon fxFlex="10">{{m.icon}}</mat-icon> -->
-      </a>
-    </span>
-  </mat-toolbar-row>
-</mat-toolbar>
-
-<mat-card>
-  <div>
-    <mat-list role="list" *ngFor="let menu of appItemsNav">
-      <mat-list-item (click)="menuChange(menu)" role="listitem">
-        <span fxFlex="90">{{menu.label}}</span>
-        <!-- <mat-icon fxFlex="10">{{menu.icon}}</mat-icon> -->
-      </mat-list-item>
-    </mat-list>
-  </div>
-</mat-card>
-
 <h5>Dashboard</h5>
 
 <mat-grid-list cols="4">
-  <mat-grid-tile>
-    <div>{{ Designation }}</div>
-    <div><i class="fa fa-user fa-5x"></i></div>
-    <div>{{ Username }}</div>
-    <h4>TEAM SUMMARY</h4>
-    <div>{{ NoOfTeamMembers }}</div>
-    <div>{{ TotalCostOfAllProjects }}</div>
-    <div>{{ PendingTasks }}</div>
-    <div>{{ UpcomingProjects }}</div>
-    <h4>CLIENTS</h4>
-    <div *ngFor="let client in Clients">
-      <div>{{ client.name }}</div>
-    </div>
-
-  </mat-grid-tile>
-  <mat-grid-tile [colspan]="2">
-    ABC
-  </mat-grid-tile>
-  <mat-grid-tile>
-    123
-  </mat-grid-tile>
+<mat-grid-tile>
+  <app-db-summary></app-db-summary>
+</mat-grid-tile>
+<mat-grid-tile [colspan]="2">
+  <app-db-projects></app-db-projects>
+</mat-grid-tile>
+<mat-grid-tile>
+  <app-db-members></app-db-members>
+</mat-grid-tile>
 </mat-grid-list>

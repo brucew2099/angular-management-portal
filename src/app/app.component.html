@@ -1,5 +1,4 @@
 <div class="app-{{appId}}-theme" id="appRootClass">
-  <!-- tool bar - start -->
   <mat-toolbar color="warn" class="tool-bar">
     <mat-toolbar-row>
       <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
@@ -8,20 +7,24 @@
       <span class="ml5">
         <span id="project-title">Angular Management Portal</span>
       </span>
-      <span class="menu-spacer">
+      <span class="menu-spacer" *ngIf="true else loggedOut">
         <a mat-button [routerLink]="''">
           <mat-icon class="icon">home</mat-icon>
           <span class="navMenu">Home</span>
         </a>
-        <a mat-button [routerLink]="'login'">
+        <!-- <a mat-button [routerLink]="'login'" routerLinkActive="active">
           <mat-icon class="icon">input</mat-icon>
           <span class="navMenu">Login</span>
-        </a>
-        <a mat-button [routerLink]="'dashboard'">
+        </a> -->
+        <a mat-button [routerLink]="'dashboard'" routerLinkActive="active">
           <mat-icon class="icon">dashboard</mat-icon>
           <span class="navMenu">Dashboard</span>
         </a>
-        <a mat-button [routerLink]="'about'">
+        <a mat-button [routerLink]="'chat'" routerLinkActive="active">
+          <mat-icon class="icon">chat</mat-icon>
+          <span class="navMenu">Chat</span>
+        </a>
+        <a mat-button [routerLink]="'about'" routerLinkActive="active">
           <mat-icon class="icon">info</mat-icon>
           <span class="navMenu">About</span>
         </a>
@@ -29,9 +32,9 @@
           <mat-icon class="icon">input</mat-icon>
           <span class="navMenu">Logout</span>
         </a>
-        <button mat-button [matMenuTriggerFor]="menu">
+        <a mat-button [matMenuTriggerFor]="menu">
           <mat-icon class="icon">format_color_fill</mat-icon>Select Theme
-        </button>
+        </a>
         <mat-menu #menu="matMenu">
           <button value='theme1' mat-menu-item (click)="switchTheme('theme1')">Default</button>
           <button value='theme2' mat-menu-item (click)="switchTheme('theme2')">Indigo</button>
@@ -40,7 +43,7 @@
       </span>
       <div id="searchDiv">
         <form [formGroup]="navForm">
-          <mat-form-field id="searchBar">
+          <mat-form-field appearance="legacy" id="searchBar">
             <input type="text" matInput formControlName="Search" [matAutocomplete]="auto"
                 placeholder="Search" (keyup.enter)="searchMe()">
             <mat-icon matSuffix [inline]="true">search</mat-icon>
@@ -55,19 +58,17 @@
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <mat-sidenav-container fxFlexFill>
+  <mat-sidenav-container>
     <mat-sidenav #sidenav>
       <mat-nav-list>
-        <div>
-          <button mat-button [matMenuTriggerFor]="menu">
-            <mat-icon class="icon">format_color_fill</mat-icon>Select Theme
-          </button>
-          <mat-menu #menu="matMenu">
-            <button value='theme1' mat-menu-item (click)="switchTheme('theme1')">Default</button>
-            <button value='theme2' mat-menu-item (click)="switchTheme('theme2')">Indigo</button>
-            <button value='theme3' mat-menu-item (click)="switchTheme('theme3')">Orange</button>
-          </mat-menu>
-        </div>
+        <a mat-button [matMenuTriggerFor]="menu">
+          <mat-icon class="icon">format_color_fill</mat-icon>Select Theme
+        </a>
+        <mat-menu #menu="matMenu">
+          <button value='theme1' mat-menu-item (click)="switchTheme('theme1')">Default</button>
+          <button value='theme2' mat-menu-item (click)="switchTheme('theme2')">Indigo</button>
+          <button value='theme3' mat-menu-item (click)="switchTheme('theme3')">Orange</button>
+        </mat-menu>
       </mat-nav-list>
       <mat-nav-list>
         <a mat-button [routerLink]="''">
@@ -75,20 +76,26 @@
           <span class="navMenu">Home</span>
         </a>
       </mat-nav-list>
-      <mat-nav-list>
-        <a mat-button [routerLink]="'login'">
+      <!-- <mat-nav-list>
+        <a mat-button [routerLink]="'login'" routerLinkActive="active">
           <mat-icon class="icon">input</mat-icon>
           <span class="navMenu">Login</span>
         </a>
-      </mat-nav-list>
+      </mat-nav-list> -->
       <mat-nav-list>
-        <a mat-button [routerLink]="'dashboard'">
+        <a mat-button [routerLink]="'dashboard'" routerLinkActive="active">
           <mat-icon class="icon">dashboard</mat-icon>
           <span class="navMenu">Dashboard</span>
         </a>
       </mat-nav-list>
       <mat-nav-list>
-        <a mat-button [routerLink]="'about'">
+        <a mat-button [routerLink]="'chat'" routerLinkActive="active">
+          <mat-icon class="icon">chat</mat-icon>
+          <span class="navMenu">Chat</span>
+        </a>
+      </mat-nav-list>
+      <mat-nav-list>
+        <a mat-button [routerLink]="'about'" routerLinkActive="active">
           <mat-icon class="icon">info</mat-icon>
           <span class="navMenu">About</span>
         </a>
@@ -106,10 +113,29 @@
         </a>
       </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content fxFlexFill>
-      <div class="footer">
-        <router-outlet></router-outlet>
-      </div>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
+
+<ng-template #loggedOut>
+  <span class="menu-spacer">
+    <a mat-button [routerLink]="'login'" routerLinkActive="active">
+      <mat-icon class="icon">input</mat-icon>
+      <span class="navMenu">Login</span>
+    </a>
+    <a mat-button [routerLink]="'signup'" routerLinkActive="active">
+      <mat-icon class="icon">edit</mat-icon>
+      <span class="navMenu">Sign Up</span>
+    </a>
+    <button mat-button [matMenuTriggerFor]="menu">
+      <mat-icon class="icon">format_color_fill</mat-icon>Select Theme
+    </button>
+    <mat-menu #menu="matMenu">
+      <button value='theme1' mat-menu-item (click)="switchTheme('theme1')">Default</button>
+      <button value='theme2' mat-menu-item (click)="switchTheme('theme2')">Indigo</button>
+      <button value='theme3' mat-menu-item (click)="switchTheme('theme3')">Orange</button>
+    </mat-menu>
+  </span>
+</ng-template>

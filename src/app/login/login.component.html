@@ -1,25 +1,42 @@
-<div class="container form-wrapper">
-  <mat-card id="login-card">
-    <mat-card-header >
-      <h2>Login</h2>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="loginForm" (submit)="submit()" novalidate>
-        <mat-form-field class="full-width">
-          <input matInput type="email" id="email-input"
-            placeholder="Enter Email" formControlName="Email" required>
-        </mat-form-field>
-        <mat-form-field class="full-width">
-          <input matInput [type]="hide ? 'password' : 'text'" id="password-input"
-            placeholder="Enter Password" formControlName="Password" required>
-          <button mat-icon-button matSuffix (click)="hide=!hide" [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide" required inline>
-          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-        </mat-form-field>
-        <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid">Login</button>
-      </form>
-    </mat-card-content>
-    <small><a [routerLink]="'/signup'">Need an Account?</a></small>
-  </mat-card>
+
+<div id="error-message" *ngIf="hasError">
+  <h3>{{errorMessage}}</h3>
 </div>
+<mat-card id="login-card">
+  <mat-card-header >
+    <h2>Login</h2>
+    <mat-icon class="material-icons help-icon" (click)="openDialog();" title="Password Help">help</mat-icon>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="loginForm" (submit)="submit()">
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput type="email" id="email-input" placeholder="Enter Email" formControlName="Email" required>
+        <mat-error *ngIf="f.Email.touched && f.Email.invalid">
+          <span class="error">
+            {{getEmailErrorMessage()}}
+          </span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <input matInput [type]="hide ? 'password' : 'text'" id="password-input"
+          placeholder="Enter Password" formControlName="Password" required>
+        <button mat-icon-button matSuffix (click)="hide=!hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide" required inline>
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="f.Password.touched && f.Password.invalid">
+          <span class="error">
+            {{getPasswordErrorMessage()}}
+            <span *ngIf="!f.Password.errors?.required">
+              <mat-icon class="material-icons">help</mat-icon>
+              on top.
+            </span>
+          </span>
+        </mat-error>
+      </mat-form-field>
+      <br/><br/>
+      <button mat-raised-button type="submit" color="primary" [disabled]="!loginForm.valid">Login</button>
+    </form>
+  </mat-card-content>
+  <small><a [routerLink]="'/signup'">Need an Account?</a></small>
+</mat-card>
