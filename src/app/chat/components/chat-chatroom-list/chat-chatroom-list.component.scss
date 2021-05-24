@@ -1,13 +1,16 @@
 @import '../../../../variables';
 
 .chatroom-list {
-  border-right: 2px solid $light-gray;
-  height: calc(100vh - 135px);
-  overflow-y: scroll;
+  height: calc(100vh - 150px);
 
   .chatroom-list-item {
-    border-bottom: 1px solid $light-gray;
-    border-top: 1px solid $light-gray;
-    padding: 0.5em 3.5em 0.5em 5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.4em;
+    padding: 1.5em 5.5em 0.5em 0.5em;
+
+    .actual-room {
+      margin-left: 20px;
+      font-size: 20px;
+    }
   }
 }

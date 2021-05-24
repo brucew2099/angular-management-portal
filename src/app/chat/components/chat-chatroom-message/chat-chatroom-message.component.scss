@@ -1,23 +1,33 @@
 @import '../../../../variables';
 
 .chat-message {
-  padding: 1.5em;
+  padding-top: 2em;
+  padding-bottom: 1em;
+  padding-right: 1em;
+  width: 96%;
+  overflow-y: auto;
+  max-height: 150px;
 
-  img {
-    margin-right: 1em;
-    height: 100px;
-    width: 100px;
-    object-fit: cover;
+  .rounded-circle {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
   }
-  .name {
-    text-decoration: underline;
-    font-weight: 600;
-  }
-  .timestamp {
-    margin-bottom: 1.5em;
-    color: darken($light-gray, 15%);
-  }
-  .message {
-    font-size: 1.2em;
+
+  .chat-content {
+    width: 100%;
+    height: 100%;
+
+    .name {
+      text-decoration: underline;
+      font-weight: 600;
+    }
+    .timestamp {
+      margin-bottom: 1.5em;
+      color: darken($light-gray, 15%);
+    }
+    .message {
+      font-size: 1.2em;
+    }
   }
 }

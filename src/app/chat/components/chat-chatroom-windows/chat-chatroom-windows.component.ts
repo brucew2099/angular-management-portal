@@ -14,7 +14,7 @@ export class ChatChatroomWindowsComponent implements OnInit {
       Sender: {
         FirstName: 'Steve',
         LastName: 'Smith',
-        PhotoUrl: 'http://via.placeholder.com/150x150'
+        PhotoUrl: 'http://via.placeholder.com/50x50'
       }
     },
     {
@@ -23,7 +23,7 @@ export class ChatChatroomWindowsComponent implements OnInit {
       Sender: {
         FirstName: 'Bob',
         LastName: 'Anderson',
-        PhotoUrl: 'http://via.placeholder.com/150x150'
+        PhotoUrl: 'http://via.placeholder.com/50x50'
       }
     },
     {
@@ -32,7 +32,7 @@ export class ChatChatroomWindowsComponent implements OnInit {
       Sender: {
         FirstName: 'Sally',
         LastName: 'Jones',
-        PhotoUrl: 'http://via.placeholder.com/150x150'
+        PhotoUrl: 'http://via.placeholder.com/50x50'
       }
     },
     {
@@ -41,7 +41,7 @@ export class ChatChatroomWindowsComponent implements OnInit {
       Sender: {
         FirstName: 'Sally',
         LastName: 'Jones',
-        PhotoUrl: 'http://via.placeholder.com/150x150'
+        PhotoUrl: 'http://via.placeholder.com/50x50'
       }
     }
   ];

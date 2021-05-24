@@ -6,12 +6,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material/material.module';
+import { NgxLoadingXConfig, POSITION, SPINNER, NgxLoadingXModule } from 'ngx-loading-x';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AboutComponent } from './about/about.component';
 import { LoginComponent } from './login/login.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { SignupComponent } from './signup/signup.component';
 import { ValidationService } from './validation.service';
+import { LoadingService } from './loading.service';
 import { HelpDialogComponent } from './help-dialog/help-dialog.component';
 import { DbSummaryComponent } from './db-summary/db-summary.component';
 import { DbProjectsComponent } from './db-projects/db-projects.component';
@@ -22,6 +24,29 @@ import { ChatChatroomListComponent } from './chat/components/chat-chatroom-list/
 import { ChatChatroomTitleBarComponent } from './chat/components/chat-chatroom-title-bar/chat-chatroom-title-bar.component';
 import { ChatChatroomMessageComponent } from './chat/components/chat-chatroom-message/chat-chatroom-message.component';
 import { ChatChatroomWindowsComponent } from './chat/components/chat-chatroom-windows/chat-chatroom-windows.component';
+import { AuthService } from './auth.service';
+import { AuthGuard } from './auth.guard';
+import { environment } from '../environments/environment';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
+import { NavmenuComponent } from './navmenu/navmenu.component';
+import { LocalStorageService } from './local-storage.service';
+
+
+const ngxLoadingXConfig: NgxLoadingXConfig = {
+  show: false,
+  bgBlur: 2,
+  bgOpacity: 5,
+  bgLogoUrl: '',
+  bgLogoUrlPosition: POSITION.topLeft,
+  bgLogoUrlSize: 100,
+  spinnerType: SPINNER.xBallSpin,
+  spinnerSize: 120,
+  spinnerColor: '#2467d2',
+  spinnerPosition: POSITION.centerCenter,
+}
 
 @NgModule({
   declarations: [
@@ -41,6 +66,8 @@ import { ChatChatroomWindowsComponent } from './chat/components/chat-chatroom-wi
     ChatChatroomTitleBarComponent,
     ChatChatroomMessageComponent,
     ChatChatroomWindowsComponent,
+    NavmenuComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -49,8 +76,13 @@ import { ChatChatroomWindowsComponent } from './chat/components/chat-chatroom-wi
     ReactiveFormsModule,
     MaterialModule,
     BrowserAnimationsModule,
+    NgxLoadingXModule.forRoot(ngxLoadingXConfig),
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireStorageModule
   ],
-  providers: [ValidationService],
+  providers: [ValidationService, LoadingService, AuthService, AuthGuard, LocalStorageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,8 +1,10 @@
 <div class="new-message-wrapper">
-  <div class="input-group">
-    <input [(ngModel)]="newMessageText" type="text" class="form-control" placeholder="Enter a new message" (keyup.enter)="submit(newMessage.value)" #newMessage>
-    <div class="input-group-append">
-      <button (click)="submit(newMessage.value)">Enter</button>
-    </div>
-  </div>
+  <form [formGroup]="chatInputForm">
+      <input intInput formControlName="NewMessageText" type="text" placeholder="Enter a new message"
+          (keyup.enter)="submit(f.NewMessageText.value)" id="newMessageText">
+      <div class="input-group-append">
+        <button mat-raised-button color="standard" (click)="submit(f.NewMessageText.value)"
+            [disabled]="f.NewMessageText.invalid">Enter</button>
+      </div>
+  </form>
 </div>

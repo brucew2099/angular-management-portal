@@ -1,6 +1,9 @@
-<mat-grid-list cols="6" rowHeight="89vh">
+<app-navmenu></app-navmenu>
+<mat-grid-list cols="6" rowHeight="89vh" class="chat-page">
   <mat-grid-tile>
-    <app-chat-chatroom-list></app-chat-chatroom-list>
+    <div class="chatroom">
+      <app-chat-chatroom-list></app-chat-chatroom-list>
+    </div>
   </mat-grid-tile>
   <mat-grid-tile [colspan]="5">
     <app-chat-chatroom-windows></app-chat-chatroom-windows>

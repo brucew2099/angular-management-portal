@@ -1,18 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../auth.service';
 import { HelpDialogComponent } from '../help-dialog/help-dialog.component';
+import { LoadingService } from '../loading.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm: FormGroup;
+  private _subscriptions: Subscription[] = [];
+  private _returnUrl: string = '';
   hide: boolean = true;
-  errorMessage: string = 'Error Message';
+  errorMessage: string | boolean = 'Error Message';
   hasError:boolean = false;
 
   title:string = 'Password Help';
@@ -29,7 +35,8 @@ export class LoginComponent implements OnInit {
 
   (f) Does NOT contain any white space`;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private loadingService: LoadingService,
+        private auth:AuthService, private route: ActivatedRoute, private router:Router) {
     this.loginForm = this.fb.group({
       Email: ['',[Validators.required, Validators.email]],
       Password: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(25),
@@ -38,6 +45,11 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this._returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/chat';
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   get Email() {
@@ -53,9 +65,24 @@ export class LoginComponent implements OnInit {
   }
 
   public submit(): void {
-    // TODO call the auth service
-    const {Email, Password} = this.loginForm.value;
-    console.log(`Email: ${Email}, Password: ${Password}`);
+    this.loadingService.isLoading.next(true);
+
+    this._subscriptions.push(
+      this.auth.login(this.Email, this.Password).subscribe(success => {
+        if(typeof(success) === 'boolean' && success) {
+          this.router.navigateByUrl(this._returnUrl);
+        }
+        else {
+          this.hasError = true;
+          this.errorMessage = success;
+
+          setTimeout(() => {
+            this.hasError = true;
+            this.errorMessage = ''
+          }, 5000);
+        }})
+    );
+    this.loadingService.isLoading.next(false);
   }
 
   openDialog():void {

@@ -6,15 +6,18 @@ import { LoginComponent } from './login/login.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { SignupComponent } from './signup/signup.component';
 import { ChatComponent } from './chat/chat.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'chat',
     component: ChatComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'about',

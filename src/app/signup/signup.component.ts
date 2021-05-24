@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../auth.service';
 import { HelpDialogComponent } from '../help-dialog/help-dialog.component';
+import { LoadingService } from '../loading.service';
 import { ValidationService } from '../validation.service';
 
 @Component({
@@ -9,13 +13,14 @@ import { ValidationService } from '../validation.service';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss']
 })
-export class SignupComponent implements OnInit {
+export class SignupComponent implements OnInit, OnDestroy {
 
   signupForm: FormGroup;
   hide: boolean = true;
   hidec:boolean = true;
-  errorMessage: string = 'Error Message';
+  errorMessage: string | boolean = 'Error Message';
   hasError: boolean = false;
+  private _subscriptions: Subscription[] = [];
 
   title:string = 'Password Help';
   header:string = 'Password should follow these rules:';
@@ -31,7 +36,8 @@ export class SignupComponent implements OnInit {
 
   (f) Does NOT contain any white space`;
 
-  constructor(private fb: FormBuilder, private dialog: MatDialog) {
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private auth: AuthService,
+        private route: ActivatedRoute, private router: Router, private loadingService: LoadingService) {
     this.signupForm = this.fb.group({
       Email: ['',[Validators.required, Validators.email]],
       Password: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(25),
@@ -48,6 +54,10 @@ export class SignupComponent implements OnInit {
   )};
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   get Email() {
@@ -76,8 +86,26 @@ export class SignupComponent implements OnInit {
 
   public submit(): void {
     // TODO call the auth service
-    const {Email, Password} = this.signupForm.value;
+    this.loadingService.isLoading.next(true);
+    const {Email, Password, Confirmed, FirstName, LastName} = this.signupForm.value;
     console.log(`Email: ${Email}, Password: ${Password}`);
+    this._subscriptions.push(
+      this.auth.signup(Email, Password, FirstName, LastName).subscribe(success => {
+        if(typeof(success) === 'boolean' && success) {
+          this.router.navigate(['/chat']);
+        }
+        else {
+          this.hasError = true;
+          this.errorMessage = success;
+
+          setTimeout(() => {
+            this.hasError = true;
+            this.errorMessage = '';
+          }, 5000);
+        }
+        this.loadingService.isLoading.next(false);
+      })
+    )
   }
 
   openDialog():void {

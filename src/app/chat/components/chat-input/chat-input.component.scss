@@ -1,8 +1,10 @@
 @import '../../../../variables';
 
 .new-message-wrapper {
-  .input-group {
-    align-self: flex-end;
+  height: 125px;
+  #newMessageText {
+    width: 99.6%;
+    font-size: 1.3em;
   }
 
   .form-control {

@@ -2,17 +2,16 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-import { LoadingService } from './loading.service';
+import { LoadingService } from '../loading.service';
 import { Subscription } from 'rxjs';
-import { AuthService } from './auth.service';
-import { User } from './user';
+import { AuthService } from '../auth.service';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-navmenu',
+  templateUrl: './navmenu.component.html',
+  styleUrls: ['./navmenu.component.scss']
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class NavmenuComponent implements OnInit, OnDestroy {
   title = 'angular-management-portal';
   appId = 'theme1';
   loading: boolean = false;
@@ -92,4 +91,5 @@ export class AppComponent implements OnInit, OnDestroy {
   logout(): void {
     this.auth.logout();
   }
+
 }
