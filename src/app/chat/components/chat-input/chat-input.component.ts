@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ChatroomService } from 'src/app/chatroom.service';
 
 @Component({
   selector: 'app-chat-input',
@@ -10,7 +11,7 @@ export class ChatInputComponent implements OnInit {
 
   chatInputForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private crs: ChatroomService) {
     this.chatInputForm = this.fb.group({
       newMessageText: ['', [Validators.required]]
     });
@@ -28,7 +29,6 @@ export class ChatInputComponent implements OnInit {
   }
 
   public submit(message: string): void {
-    // TODO save text to firebase
     console.log('New Message: ', message);
     this.f.newMessageText.setValue('');
   }

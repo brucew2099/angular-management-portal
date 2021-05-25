@@ -11,7 +11,8 @@ import { LocalStorageService } from './local-storage.service';
 })
 export class AuthService implements OnInit {
 
-  userState: any;
+  userState: any | null = null;
+  userStateSnapshot: User | null = null;
 
   constructor(private router: Router, private afAuth: AngularFireAuth,
         private db: AngularFirestore, private ngZone: NgZone, private ls: LocalStorageService) {
@@ -32,6 +33,8 @@ export class AuthService implements OnInit {
           // }
         }
       })
+
+      this._setUserSnapshot();
   }
 
   ngOnInit(): void {
@@ -104,5 +107,13 @@ export class AuthService implements OnInit {
     return userRef.set(userState, {
       merge: true
     });
+  }
+
+  private _setUserSnapshot(): void {
+    if(this.userState !== null) {
+      this.userState.cast.subscribe((user: User) => {
+        this.userStateSnapshot = user;
+      });
+    }
   }
 }

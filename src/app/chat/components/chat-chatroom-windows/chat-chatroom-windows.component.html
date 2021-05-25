@@ -9,9 +9,9 @@
 </div>
 
 <ng-template #chatMessages>
-  <app-chat-chatroom-title-bar [title]="'Development in Angular'"></app-chat-chatroom-title-bar>
-  <div class="message-wrapper">
-    <ng-container *ngFor="let message of fakeData">
+  <app-chat-chatroom-title-bar [title]="chatroom.name"></app-chat-chatroom-title-bar>
+  <div class="message-wrapper" #scrollcontainer>
+    <ng-container *ngFor="let message in messages">
       <app-chat-chatroom-message [message]="message"></app-chat-chatroom-message>
     </ng-container>
   </div>

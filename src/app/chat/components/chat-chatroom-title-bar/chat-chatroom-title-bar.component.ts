@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./chat-chatroom-title-bar.component.scss']
 })
 export class ChatChatroomTitleBarComponent implements OnInit {
-  @Input() title: string = 'Cat Facts';
+  @Input() title: string = '';
 
   constructor() { }
 
