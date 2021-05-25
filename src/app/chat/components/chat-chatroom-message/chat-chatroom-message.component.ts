@@ -8,8 +8,8 @@ import { User } from '../../../user';
   styleUrls: ['./chat-chatroom-message.component.scss']
 })
 export class ChatChatroomMessageComponent implements OnInit {
-  @Input() User: User = new User({FirstName:'', LastName:''});
-  @Input() Message: Message = new Message({Message:'', CreatedAt: new Date(), Sender:{User}});
+  @Input() user: User = new User({firstName:'', lastName:''});
+  @Input() message: Message = new Message({message:'', createdAt: new Date(), sender:{User}});
 
   constructor() { }
 

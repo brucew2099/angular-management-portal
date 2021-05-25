@@ -95,7 +95,7 @@
             <div id="searchDiv">
               <form [formGroup]="navForm">
                 <mat-form-field appearance="legacy" id="searchBar">
-                  <input type="text" matInput formControlName="Search" [matAutocomplete]="auto"
+                  <input type="text" matInput formControlName="search" [matAutocomplete]="auto"
                       placeholder="Search" (keyup.enter)="searchMe()">
                   <mat-icon matSuffix [inline]="true">search</mat-icon>
                   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">

@@ -1,18 +1,10 @@
 <div class="chatroom-list">
-  <ng-container>
-    <a mat-button [routerLink]="''">
-      <div class="chatroom-list-item">
+  <ng-container *ngFor="let chatroom of crs.chatrooms | async">
+    <div class="chatroom-list-item">
+      <a mat-button [routerLink]="['/chat', chatroom.id]">
         <mat-icon>room</mat-icon>
-        <span class="actual-room">Development in Angular</span>
-      </div>
-    </a>
-  </ng-container>
-  <ng-container *ngFor="let chatRoom of [2,3,4,5,6,7,8,9,10,11,12,13,14,15]">
-    <a mat-button [routerLink]="''">
-      <div class="chatroom-list-item">
-        <mat-icon>room</mat-icon>
-        <span class="actual-room">Chat Room #{{ chatRoom }}</span>
-      </div>
-    </a>
+        <span class="actual-room">{{ chatroom.name }}</span>
+      </a>
+    </div>
   </ng-container>
 </div>

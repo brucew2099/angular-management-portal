@@ -38,8 +38,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder, private dialog: MatDialog, private loadingService: LoadingService,
         private auth:AuthService, private route: ActivatedRoute, private router:Router) {
     this.loginForm = this.fb.group({
-      Email: ['',[Validators.required, Validators.email]],
-      Password: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(25),
+      email: ['',[Validators.required, Validators.email]],
+      password: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(25),
             Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8,}$')]]
     });
   }
@@ -52,12 +52,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     this._subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  get Email() {
-    return this.loginForm.value.Email;
+  get email() {
+    return this.loginForm.value.email;
   }
 
-  get Password() {
-    return this.loginForm.value.Password;
+  get password() {
+    return this.loginForm.value.password;
   }
 
   get f() {
@@ -68,13 +68,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loadingService.isLoading.next(true);
 
     this._subscriptions.push(
-      from(this.auth.login(this.Email, this.Password)).subscribe(success => {
+      from(this.auth.login(this.email, this.password)).subscribe(success => {
         if(typeof(success) === 'boolean' && success) {
           this.router.navigateByUrl(this._returnUrl);
         }
         else {
           this.hasError = true;
           this.errorMessage = success;
+          console.log(success);
 
           setTimeout(() => {
             this.hasError = true;
@@ -94,17 +95,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   getEmailErrorMessage() {
-    if(this.f.Email.hasError('required')) {
+    if(this.f.email.hasError('required')) {
       return 'Email is required';
     }
-    return this.f.Email.hasError('email') ? 'Email is not valid' : '';
+    return this.f.email.hasError('email') ? 'Email is not valid' : '';
   }
 
   getPasswordErrorMessage() {
-    if(this.f.Password.hasError('required')) {
+    if(this.f.password.hasError('required')) {
       return 'Password is required';
     }
-    return this.f.Password.hasError('pattern') ?
+    return this.f.password.hasError('pattern') ?
       'Password is not valid. For more information, click on' : '';
   }
 

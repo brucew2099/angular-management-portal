@@ -10,8 +10,8 @@
     <form [formGroup]="signupForm" (submit)="submit()">
       <mat-form-field appearance="outline" class="full-width">
         <input matInput type="email" id="email-input"
-          placeholder="Enter Email" formControlName="Email" required>
-          <mat-error *ngIf="f.Email.touched && f.Email.invalid">
+          placeholder="Enter Email" formControlName="email" required>
+          <mat-error *ngIf="f.email.touched && f.email.invalid">
             <span class="error">
               {{getEmailErrorMessage()}}
             </span>
@@ -20,16 +20,16 @@
       <br/><br/>
       <span>
         <mat-form-field appearance="outline" class="half-width firstname-input">
-          <input matInput type="text" placeholder="Enter First Name" formControlName="FirstName" required>
-            <mat-error *ngIf="f.FirstName.touched && f.FirstName.invalid">
+          <input matInput type="text" placeholder="Enter First Name" formControlName="firstName" required>
+            <mat-error *ngIf="f.firstName.touched && f.firstName.invalid">
               <span class="error">
                 {{getFirstNameErrorMessage()}}
               </span>
             </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline" class="half-width lastname-input">
-          <input matInput type="text" placeholder="Enter Last Name" formControlName="LastName" required>
-            <mat-error *ngIf="f.LastName.touched && f.LastName.invalid">
+          <input matInput type="text" placeholder="Enter Last Name" formControlName="lastName" required>
+            <mat-error *ngIf="f.lastName.touched && f.lastName.invalid">
               <span class="error">
                 {{getLastNameErrorMessage()}}
               </span>
@@ -39,15 +39,15 @@
       <br/><br/>
       <mat-form-field appearance="outline" class="full-width">
         <input matInput [type]="hide ? 'password' : 'text'" id="password-input"
-          placeholder="Enter Password" formControlName="Password" required>
+          placeholder="Enter Password" formControlName="password" required>
         <button mat-icon-button matSuffix (click)="hide=!hide" [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hide" required inline>
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
-        <mat-error *ngIf="f.Password.touched && f.Password.invalid">
+        <mat-error *ngIf="f.password.touched && f.password.invalid">
           <span class="error">
             {{getPasswordErrorMessage()}}
-            <span *ngIf="!f.Password.errors?.required">
+            <span *ngIf="!f.password.errors?.required">
               <mat-icon class="material-icons">help</mat-icon>
               on top.
             </span>
@@ -57,15 +57,15 @@
       <br/><br/>
       <mat-form-field appearance="outline" class="full-width">
         <input matInput [type]="hidec ? 'password' : 'text'" id="confirmed-input"
-          placeholder="Enter Confirmed Password" formControlName="Confirmed" required>
+          placeholder="Enter Confirmed Password" formControlName="confirmed" required>
         <button mat-icon-button matSuffix (click)="hidec=!hidec" [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hidec" required inline>
         <mat-icon>{{hidec ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
-        <mat-error *ngIf="f.Confirmed.touched && f.Confirmed.invalid">
+        <mat-error *ngIf="f.confirmed.touched && f.confirmed.invalid">
           <span class="error">
             {{getConfirmedErrorMessage()}}
-            <span *ngIf="!f.Confirmed.errors?.required">
+            <span *ngIf="!f.confirmed.errors?.required">
               <mat-icon class="material-icons">help</mat-icon>
               on top.
             </span>
@@ -76,5 +76,5 @@
       <button mat-raised-button type="submit" color="primary" [disabled]="!signupForm.valid">Signup</button>
     </form>
   </mat-card-content>
-  <small><a [routerLink]="'/login'">Already have an Account?</a></small>
+  <small><a [routerLink]="'login'">Already have an Account?</a></small>
 </mat-card>

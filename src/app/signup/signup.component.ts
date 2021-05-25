@@ -39,17 +39,17 @@ export class SignupComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder, private dialog: MatDialog, private auth: AuthService,
         private route: ActivatedRoute, private router: Router, private loadingService: LoadingService) {
     this.signupForm = this.fb.group({
-      Email: ['',[Validators.required, Validators.email]],
-      Password: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(25),
+      email: ['',[Validators.required, Validators.email]],
+      password: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(25),
             Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8,}$')]],
-      Confirmed: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(25),
+      confirmed: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(25),
         Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])(?=\\S+$).{8,}$'),
         ValidationService.ConfirmedValidator]],
-      FirstName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
-      LastName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]]
+      firstName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]],
+      lastName: ['', [Validators.required, Validators.pattern('[a-zA-Z ]*')]]
     },
     {
-      validator: ValidationService.ConfirmedValidator('Password', 'Confirmed')
+      validator: ValidationService.ConfirmedValidator('password', 'confirmed')
     }
   )};
 
@@ -60,24 +60,24 @@ export class SignupComponent implements OnInit, OnDestroy {
     this._subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  get Email() {
-    return this.signupForm.value.Email;
+  get email() {
+    return this.signupForm.value.email;
   }
 
-  get Password() {
-    return this.signupForm.value.Password
+  get password() {
+    return this.signupForm.value.password
   }
 
-  get Confirmed() {
-    return this.signupForm.value.Confirmed;
+  get confirmed() {
+    return this.signupForm.value.confirmed;
   }
 
-  get FirstName() {
-    return this.signupForm.value.FirstName;
+  get firstName() {
+    return this.signupForm.value.firstName;
   }
 
-  get LastName() {
-    return this.signupForm.value.LastName;
+  get lastName() {
+    return this.signupForm.value.lastName;
   }
 
   get f() {
@@ -85,12 +85,11 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   public submit(): void {
-    // TODO call the auth service
     this.loadingService.isLoading.next(true);
-    const {Email, Password, Confirmed, FirstName, LastName} = this.signupForm.value;
-    console.log(`Email: ${Email}, Password: ${Password}`);
+    const {email, password, confirmed, firstName, lastName} = this.signupForm.value;
+    console.log(`Email: ${email}, Password: ${password}`);
     this._subscriptions.push(
-      this.auth.signup(Email, Password, FirstName, LastName).subscribe(success => {
+      this.auth.signup(email, password, firstName, lastName).subscribe(success => {
         if(typeof(success) === 'boolean' && success) {
           this.router.navigate(['/chat']);
         }
@@ -116,43 +115,43 @@ export class SignupComponent implements OnInit, OnDestroy {
   }
 
   getEmailErrorMessage() {
-    if(this.f.Email.hasError('required')) {
+    if(this.f.email.hasError('required')) {
       return 'Email is required';
     }
-    return this.f.Email.hasError('email') ? 'Email is not valid' : '';
+    return this.f.email.hasError('email') ? 'Email is not valid' : '';
   }
 
   getPasswordErrorMessage() {
-    if(this.f.Password.hasError('required')) {
+    if(this.f.password.hasError('required')) {
       return 'Password is required';
     }
-    return this.f.Password.hasError('pattern') ?
+    return this.f.password.hasError('pattern') ?
       'Password is not valid. For more information, click on' : '';
   }
 
   getConfirmedErrorMessage() {
-    if(this.f.Confirmed.hasError('required')) {
+    if(this.f.confirmed.hasError('required')) {
       return 'Confirmed Password is required';
     }
-    else if(this.f.Confirmed.hasError('mustMatch')) {
+    else if(this.f.confirmed.hasError('mustMatch')) {
       return 'Passwords do not match'
     }
-    return this.f.Confirmed.hasError('password') ?
+    return this.f.confirmed.hasError('password') ?
       'Confirmed Password is not valid. For more information, click on' : '';
   }
 
   getFirstNameErrorMessage() {
-    if(this.f.FirstName.hasError('required')) {
+    if(this.f.firstName.hasError('required')) {
       return 'First Name is required';
     }
-    return this.f.FirstName.hasError('pattern') ? 'First Name is not valid' : '';
+    return this.f.firstName.hasError('pattern') ? 'First Name is not valid' : '';
   }
 
   getLastNameErrorMessage() {
-    if(this.f.LastName.hasError('required')) {
+    if(this.f.lastName.hasError('required')) {
       return 'Last Name is required';
     }
-    return this.f.LastName.hasError('pattern') ? 'Last Name is not valid' : '';
+    return this.f.lastName.hasError('pattern') ? 'Last Name is not valid' : '';
   }
 
 }

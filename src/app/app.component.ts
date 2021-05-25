@@ -35,10 +35,10 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private fb:FormBuilder, private ls: LoadingService, public auth: AuthService,
         private localService: LocalStorageService) {
     this.navForm = this.fb.group({
-      Search: ['',[]]
+      search: ['',[]]
     });
 
-    this.filteredAuthors = this.f.Search.valueChanges.pipe(
+    this.filteredAuthors = this.f.search.valueChanges.pipe(
       startWith(''),
       map((author: string) => this._filter(author))
     );
@@ -62,8 +62,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this._subscriptions.forEach(sub => sub.unsubscribe);
   }
 
-  get Search() {
-    return this.navForm.value.Search;
+  get search() {
+    return this.navForm.value.search;
   }
 
   get f() {
@@ -81,7 +81,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   searchMe() {
-    alert(this.Search);
+    alert(this.search);
   }
 
   switchTheme(appId: string) {

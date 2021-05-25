@@ -1,13 +1,13 @@
 import { User } from './user';
 
 export class Message {
-  Message: string;
-  CreatedAt: Date;
-  Sender: User;
+  message: string;
+  createdAt: Date;
+  sender: User;
 
-  constructor({Message, CreatedAt, Sender}: any) {
-    this.Message = Message;
-    this.CreatedAt = CreatedAt;
-    this.Sender = new User(Sender);
+  constructor({message, createdAt, sender}: any) {
+    this.message = message;
+    this.createdAt = createdAt;
+    this.sender = new User(sender);
   }
 }

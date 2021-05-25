@@ -12,15 +12,15 @@ export class ChatInputComponent implements OnInit {
 
   constructor(private fb: FormBuilder) {
     this.chatInputForm = this.fb.group({
-      NewMessageText: ['', [Validators.required]]
+      newMessageText: ['', [Validators.required]]
     });
   }
 
   ngOnInit(): void {
   }
 
-  get NewMessageText() {
-    return this.chatInputForm.value.NewMessageText;
+  get newMessageText() {
+    return this.chatInputForm.value.newMessageText;
   }
 
   get f() {
@@ -30,7 +30,7 @@ export class ChatInputComponent implements OnInit {
   public submit(message: string): void {
     // TODO save text to firebase
     console.log('New Message: ', message);
-    this.f.NewMessageText.setValue('');
+    this.f.newMessageText.setValue('');
   }
 
 }

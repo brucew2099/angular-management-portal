@@ -1,19 +1,17 @@
 export class User {
-  Id?: string;
-  FirstName: string;
-  LastName: string;
-  DisplayName?: string;
-  Email?: string | null | undefined;
-  Password?: string;
-  PhotoUrl?: string;
+  id?: string;
+  firstName: string;
+  lastName: string;
+  displayName?: string;
+  email?: string | null | undefined;
+  photoUrl?: string;
 
-  constructor({Id, FirstName, LastName, DisplayName, Email, Password, PhotoUrl}: any) {
-    this.Id = Id;
-    this.FirstName = FirstName;
-    this.LastName = LastName;
-    this.DisplayName = DisplayName;
-    this.Email = Email;
-    this.Password = Password;
-    this.PhotoUrl = PhotoUrl;
+  constructor({id, firstName, lastName, displayName, email, photoUrl}: any) {
+    this.id = id;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.displayName = displayName;
+    this.email = email;
+    this.photoUrl = photoUrl;
   }
 }

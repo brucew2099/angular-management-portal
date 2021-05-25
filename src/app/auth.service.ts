@@ -42,11 +42,11 @@ export class AuthService implements OnInit {
       if(cred.user !== null && cred.user !== undefined) {
         const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${cred.user.uid}`);
         const updatedUser: User = {
-          Id: cred.user.uid,
-          Email: cred.user.email,
-          FirstName: '',
-          LastName: '',
-          PhotoUrl: 'https://firebasestorage.googleapis.com/v0/b/manage-portal-79295.appspot.com/o/iggy_cr.png?alt=media&token=7d8c1b57-bbf0-45e5-bd40-e4b7cfd1c112'
+          id: cred.user.uid,
+          email: cred.user.email,
+          firstName: 'Alan',
+          lastName: 'Kwok',
+          photoUrl: 'https://firebasestorage.googleapis.com/v0/b/manage-portal-79295.appspot.com/o/iggy_cr.png?alt=media&token=7d8c1b57-bbf0-45e5-bd40-e4b7cfd1c112'
         };
         userRef.set(new User(updatedUser));
         this._setUserData(cred.user)
@@ -58,19 +58,21 @@ export class AuthService implements OnInit {
     })
     .catch(error => {
         return error.message;
+        console.log(error.message);
     }));
   }
 
-  login(Email:string, Password:string) {
-    return this.afAuth.signInWithEmailAndPassword(Email, Password)
-      .then(result => {
-        this.ngZone.run(() => {
-          this.router.navigate(['chat']);
-        });
-        this._setUserData(result.user);
-      }).catch(error => {
-        return error.message;
+  async login(Email:string, Password:string) {
+    try {
+      const result = await this.afAuth.signInWithEmailAndPassword(Email, Password);
+      this.ngZone.run(() => {
+        this.router.navigate(['chat']);
       });
+      this._setUserData(result.user);
+    } catch (error) {
+      console.log(error.message);
+      return error.message;
+    }
   }
 
   logout(): void {
@@ -92,12 +94,12 @@ export class AuthService implements OnInit {
   private _setUserData(user: any) {
     const userRef: AngularFirestoreDocument<any> = this.db.doc(`users/${user.uid}`);
     const userState: User = {
-      Id: user.uid,
-      Email: user.email,
-      FirstName: user.firstName,
-      LastName: user.lastName,
-      DisplayName: user.displayName,
-      PhotoUrl: user.photoURL,
+      id: user.uid,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      displayName: user.FirstName,
+      photoUrl: user.photoURL,
     }
     return userRef.set(userState, {
       merge: true

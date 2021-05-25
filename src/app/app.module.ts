@@ -33,6 +33,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire';
 import { NavmenuComponent } from './navmenu/navmenu.component';
 import { LocalStorageService } from './local-storage.service';
+import { ChatroomService } from './chatroom.service';
 
 
 const ngxLoadingXConfig: NgxLoadingXConfig = {
@@ -82,7 +83,7 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     AngularFirestoreModule,
     AngularFireStorageModule
   ],
-  providers: [ValidationService, LoadingService, AuthService, AuthGuard, LocalStorageService],
+  providers: [ValidationService, LoadingService, AuthService, AuthGuard, LocalStorageService, ChatroomService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -17,7 +17,17 @@ const routes: Routes = [
   {
     path: 'chat',
     component: ChatComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        component: ChatComponent
+      },
+      {
+        path: ':chatroomId',
+        component: ChatComponent
+      },
+    ]
   },
   {
     path: 'about',

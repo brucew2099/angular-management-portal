@@ -10,8 +10,8 @@
   <mat-card-content>
     <form [formGroup]="loginForm" (submit)="submit()">
       <mat-form-field appearance="outline" class="full-width">
-        <input matInput type="email" id="email-input" placeholder="Enter Email" formControlName="Email" required>
-        <mat-error *ngIf="f.Email.touched && f.Email.invalid">
+        <input matInput type="email" id="email-input" placeholder="Enter Email" formControlName="email" required>
+        <mat-error *ngIf="f.email.touched && f.email.invalid">
           <span class="error">
             {{getEmailErrorMessage()}}
           </span>
@@ -19,15 +19,15 @@
       </mat-form-field>
       <mat-form-field appearance="outline" class="full-width">
         <input matInput [type]="hide ? 'password' : 'text'" id="password-input"
-          placeholder="Enter Password" formControlName="Password" required>
+          placeholder="Enter Password" formControlName="password" required>
         <button mat-icon-button matSuffix (click)="hide=!hide" [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hide" required inline>
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
-        <mat-error *ngIf="f.Password.touched && f.Password.invalid">
+        <mat-error *ngIf="f.password.touched && f.password.invalid">
           <span class="error">
             {{getPasswordErrorMessage()}}
-            <span *ngIf="!f.Password.errors?.required">
+            <span *ngIf="!f.password.errors?.required">
               <mat-icon class="material-icons">help</mat-icon>
               on top.
             </span>
