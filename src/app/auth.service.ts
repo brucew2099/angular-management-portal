@@ -15,26 +15,26 @@ export class AuthService implements OnInit {
 
   constructor(private router: Router, private afAuth: AngularFireAuth,
         private db: AngularFirestore, private ngZone: NgZone, private ls: LocalStorageService) {
+      this.afAuth.authState.subscribe(user => {
+        if(user) {
+          this.userState = user;
+          localStorage.setItem('user', JSON.stringify(this.userState));
+          const juser = this.ls.getItem('user');
+          if(juser !== null && juser !== undefined) {
+            JSON.parse(juser);
+          }
+        }
+        else {
+          this.ls.setItem('user', '');
+          // const juser = this.ls.getItem('user');
+          // if(juser !== null && juser !== undefined) {
+          //   JSON.parse();
+          // }
+        }
+      })
   }
 
   ngOnInit(): void {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.userState = user;
-        localStorage.setItem('user', JSON.stringify(this.userState));
-        const juser = this.ls.getItem('user');
-        if(juser !== null && juser !== undefined) {
-          JSON.parse(juser);
-        }
-      }
-      else {
-        this.ls.setItem('user', '');
-        const juser = this.ls.getItem('user');
-        if(juser !== null && juser !== undefined) {
-          JSON.parse(juser);
-        }
-      }
-    })
   }
 
   signup(Email:string, Password:string, FirstName:string, LastName:string): Observable<boolean | string> {
@@ -68,13 +68,14 @@ export class AuthService implements OnInit {
           this.router.navigate(['chat']);
         });
         this._setUserData(result.user);
-      }).catch((error) => {
-        return error.message
+      }).catch(error => {
+        return error.message;
       });
   }
 
   logout(): void {
     this.afAuth.signOut().then(() => {
+      this.ls.removeItem('user');
       this.router.navigate(['login']);
     });
   }
@@ -82,10 +83,10 @@ export class AuthService implements OnInit {
   get isLoggedIn(): boolean {
     const juser = this.ls.getItem('user');
     let user: string = '';
-    if(juser !== null && juser !== undefined) {
-      user = JSON.parse(juser);
+    if(user !== null && user !== undefined && user !== '') {
+      return true;
     }
-    return (user !== null) ? true : false;
+    return  false;
   }
 
   private _setUserData(user: any) {

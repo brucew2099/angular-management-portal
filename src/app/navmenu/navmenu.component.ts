@@ -5,6 +5,7 @@ import { map, startWith } from 'rxjs/operators';
 import { LoadingService } from '../loading.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
+import { LocalStorageService } from '../local-storage.service';
 
 @Component({
   selector: 'app-navmenu',
@@ -15,7 +16,7 @@ export class NavmenuComponent implements OnInit, OnDestroy {
   title = 'angular-management-portal';
   appId = 'theme1';
   loading: boolean = false;
-  currentUser: any = null;
+  currentUser: any = '';
 
   private _subscriptions: Subscription[] = [];
 
@@ -31,7 +32,8 @@ export class NavmenuComponent implements OnInit, OnDestroy {
   filteredAuthors: Observable<string[]>;
   authors:string[] = [];
 
-  constructor(private fb:FormBuilder, private ls: LoadingService, public auth: AuthService) {
+  constructor(private fb:FormBuilder, private ls: LoadingService, public auth: AuthService,
+        private localStorage: LocalStorageService) {
     this.navForm = this.fb.group({
       Search: ['',[]]
     });
@@ -53,9 +55,7 @@ export class NavmenuComponent implements OnInit, OnDestroy {
       })
     )
 
-    this.auth.currentUser.subscribe(user =>{
-      this.currentUser = user;
-    });
+    this.currentUser = this.localStorage.getItem('user');
   }
 
   ngOnDestroy(): void {
@@ -90,6 +90,10 @@ export class NavmenuComponent implements OnInit, OnDestroy {
 
   logout(): void {
     this.auth.logout();
+  }
+
+  get isLoggedIn() {
+    return this.auth.isLoggedIn;
   }
 
 }

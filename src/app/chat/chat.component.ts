@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
+import { LocalStorageService } from '../local-storage.service';
 
 @Component({
   selector: 'app-chat',
@@ -9,12 +9,10 @@ import { AuthService } from '../auth.service';
 export class ChatComponent implements OnInit {
   currentUser: any = null;
 
-  constructor(private auth: AuthService) { }
+  constructor(private ls: LocalStorageService) { }
 
   ngOnInit(): void {
-    this.auth.currentUser.subscribe(user=> {
-      this.currentUser = user;
-    })
+    this.currentUser = this.ls.getItem('user');
   }
 
 }

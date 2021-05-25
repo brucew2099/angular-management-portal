@@ -1,7 +1,7 @@
 <div class="app-{{appId}}-theme" id="appRootClass">
   <mat-sidenav-container class="side-nav" fullscreen>
     <mat-sidenav #sidenav closed mode="side" position="start">
-      <div *ngIf="currentUser else sbLoggedOut" class="startNavList">
+      <div *ngIf="isLoggedIn else sbLoggedOut" class="startNavList">
         <mat-nav-list>
           <h2>Portal Menu</h2>
         </mat-nav-list>
@@ -62,7 +62,7 @@
             <span class="ml5">
               <span id="project-title">Angular Management Portal</span>
             </span>
-            <span class="menu-spacer" *ngIf="currentUser else loggedOut">
+            <span class="menu-spacer" *ngIf="isLoggedIn else loggedOut">
               <a mat-button [routerLink]="''">
                 <mat-icon class="icon">home</mat-icon>
                 <span class="navMenu">Home</span>
@@ -148,6 +148,12 @@
     <a mat-button [routerLink]="'signup'" routerLinkActive="active">
       <mat-icon class="icon">edit</mat-icon>
       <span class="navMenu">Sign Up</span>
+    </a>
+  </mat-nav-list>
+  <mat-nav-list>
+    <a mat-button (click)="sidenav.toggle()">
+      <mat-icon class="icon">close</mat-icon>
+      <span class="navMenu">Close</span>
     </a>
   </mat-nav-list>
   </div>

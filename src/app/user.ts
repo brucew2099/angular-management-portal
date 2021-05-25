@@ -3,7 +3,7 @@ export class User {
   FirstName: string;
   LastName: string;
   DisplayName?: string;
-  Email: string | null | undefined;
+  Email?: string | null | undefined;
   Password?: string;
   PhotoUrl?: string;
 

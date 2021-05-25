@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, from } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { HelpDialogComponent } from '../help-dialog/help-dialog.component';
 import { LoadingService } from '../loading.service';
@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loadingService.isLoading.next(true);
 
     this._subscriptions.push(
-      this.auth.login(this.Email, this.Password).subscribe(success => {
+      from(this.auth.login(this.Email, this.Password)).subscribe(success => {
         if(typeof(success) === 'boolean' && success) {
           this.router.navigateByUrl(this._returnUrl);
         }
@@ -82,6 +82,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           }, 5000);
         }})
     );
+
     this.loadingService.isLoading.next(false);
   }
 

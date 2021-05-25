@@ -5,7 +5,7 @@ import { map, startWith } from 'rxjs/operators';
 import { LoadingService } from './loading.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from './auth.service';
-import { User } from './user';
+import { LocalStorageService } from './local-storage.service';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +32,8 @@ export class AppComponent implements OnInit, OnDestroy {
   filteredAuthors: Observable<string[]>;
   authors:string[] = [];
 
-  constructor(private fb:FormBuilder, private ls: LoadingService, public auth: AuthService) {
+  constructor(private fb:FormBuilder, private ls: LoadingService, public auth: AuthService,
+        private localService: LocalStorageService) {
     this.navForm = this.fb.group({
       Search: ['',[]]
     });
@@ -54,9 +55,7 @@ export class AppComponent implements OnInit, OnDestroy {
       })
     )
 
-    this.auth.currentUser.subscribe(user =>{
-      this.currentUser = user;
-    });
+    this.currentUser = this.localService.getItem('user');
   }
 
   ngOnDestroy(): void {
