@@ -11,11 +11,11 @@ import { LoadingService } from 'src/app/loading.service';
   styleUrls: ['./chat-chatroom-windows.component.scss']
 })
 export class ChatChatroomWindowsComponent implements OnInit, OnDestroy, AfterViewChecked {
-  @ViewChild('scrollContainer') private _scrollContainer: ElementRef = new ElementRef(null);
+  @ViewChild('scrollContainer') private _scrollContainer: ElementRef<any>;
 
   private _subscriptions: Subscription[] = [];
-  chatroom: any = {};
-  messages: any = {};
+  chatroom: any;
+  messages: Observable<any>;
 
   constructor(private route: ActivatedRoute, private crs: ChatroomService, private ls: LoadingService) {
     this._subscriptions.push(
@@ -54,7 +54,9 @@ export class ChatChatroomWindowsComponent implements OnInit, OnDestroy, AfterVie
 
   private _scrollToBottom(): void {
     try {
-      this._scrollContainer.nativeElement.scrollTop = this._scrollContainer.nativeElement.scrollHeight;
+      if(this._scrollContainer) {
+        this._scrollContainer.nativeElement.scrollTop = this._scrollContainer.nativeElement.scrollHeight;
+      }
     }
     catch(error) {
       console.log(error.message);

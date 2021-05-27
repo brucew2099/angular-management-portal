@@ -1,5 +1,5 @@
 <div class="app-{{appId}}-theme" id="appRootClass">
-  <mat-sidenav-container class="side-nav" fullscreen>
+  <!-- <mat-sidenav-container class="side-nav" fullscreen>
     <mat-sidenav #sidenav closed mode="side" position="start">
       <div *ngIf="isLoggedIn else sbLoggedOut" class="startNavList">
         <mat-nav-list>
@@ -53,17 +53,17 @@
         </mat-nav-list>
       </div>
     </mat-sidenav>
-      <mat-sidenav-content>
+      <mat-sidenav-content> -->
         <mat-toolbar color="warn" class="tool-bar">
           <mat-toolbar-row>
-            <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+            <!-- <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
               <mat-icon>menu</mat-icon>
-            </button>
+            </button> -->
             <span class="ml5">
               <span id="project-title">Angular Management Portal</span>
             </span>
-            <span class="menu-spacer" *ngIf="isLoggedIn else loggedOut">
-              <a mat-button [routerLink]="''">
+            <div class="menu-spacer" *ngIf="isLoggedIn else loggedOut">
+              <a mat-button [routerLink]="'chat'">
                 <mat-icon class="icon">home</mat-icon>
                 <span class="navMenu">Home</span>
               </a>
@@ -91,7 +91,7 @@
                 <button value='theme2' mat-menu-item (click)="switchTheme('theme2')">Indigo</button>
                 <button value='theme3' mat-menu-item (click)="switchTheme('theme3')">Orange</button>
               </mat-menu>
-            </span>
+            </div>
             <div id="searchDiv">
               <form [formGroup]="navForm">
                 <mat-form-field appearance="legacy" id="searchBar">
@@ -108,8 +108,8 @@
             </div>
           </mat-toolbar-row>
         </mat-toolbar>
-      </mat-sidenav-content>
-  </mat-sidenav-container>
+      <!-- </mat-sidenav-content>
+  </mat-sidenav-container> -->
 </div>
 
 <ng-template #loggedOut>
@@ -133,7 +133,7 @@
   </span>
 </ng-template>
 
-<ng-template #sbLoggedOut>
+<!-- <ng-template #sbLoggedOut>
   <div class="startNavList">
   <mat-nav-list>
     <h2>Portal Menu</h2>
@@ -157,4 +157,4 @@
     </a>
   </mat-nav-list>
   </div>
-</ng-template>
+</ng-template> -->

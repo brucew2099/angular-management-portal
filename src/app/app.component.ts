@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { LoadingService } from './loading.service';
-import { Subscription } from 'rxjs';
 import { AuthService } from './auth.service';
 import { LocalStorageService } from './local-storage.service';
 
@@ -16,7 +15,6 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'angular-management-portal';
   appId = 'theme1';
   loading: boolean = false;
-  currentUser: any = null;
 
   private _subscriptions: Subscription[] = [];
 
@@ -54,8 +52,6 @@ export class AppComponent implements OnInit, OnDestroy {
         this.loading = isLoading;
       })
     )
-
-    this.currentUser = this.localService.getItem('user');
   }
 
   ngOnDestroy(): void {

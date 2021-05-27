@@ -1,8 +1,8 @@
-<mat-grid-list cols="15" class="chat-message">
+<mat-grid-list rows="15" rowHeight="100px" class="chat-message">
   <mat-grid-tile>
     <img [src]="message.sender.photoUrl" class="rounded-circle">
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="14" rowHeight="100px">
+  <mat-grid-tile [rowspan]="14">
     <div class="chat-content">
       <div class="name">
         {{message.sender.firstName}} {{message.sender.lastName}}
@@ -12,3 +12,18 @@
     </div>
   </mat-grid-tile>
 </mat-grid-list>
+
+<!-- <div class="chat-message">
+  <div class="image-wrapper" [routerLink]="'/profile/' + message.sender.id">
+    <img [src]="message.sender.photoUrl" class="rounded-circle">
+  </div>
+  <div class="chat-content">
+    <div class="name">
+      {{message.sender.firstName}} {{message.sender.lastName}}
+    </div>
+    <small class="timestamp">{{message.createdAt | date:'medium'}}</small>
+    <div class="message">
+      {{message.message}}
+    </div>
+  </div>
+</div> -->

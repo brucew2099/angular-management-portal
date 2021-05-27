@@ -68,10 +68,11 @@ export class AuthService implements OnInit {
   async login(Email:string, Password:string) {
     try {
       const result = await this.afAuth.signInWithEmailAndPassword(Email, Password);
-      this.ngZone.run(() => {
-        this.router.navigate(['chat']);
-      });
+      // this.ngZone.run(() => {
+      //   this.router.navigate(['chat']);
+      // });
       this._setUserData(result.user);
+      return true;
     } catch (error) {
       console.log(error.message);
       return error.message;
@@ -87,8 +88,8 @@ export class AuthService implements OnInit {
 
   get isLoggedIn(): boolean {
     const juser = this.ls.getItem('user');
-    let user: string = '';
-    if(user !== null && user !== undefined && user !== '') {
+    //let user: string = '';
+    if(juser !== null && juser !== undefined && juser !== '') {
       return true;
     }
     return  false;
@@ -99,9 +100,9 @@ export class AuthService implements OnInit {
     const userState: User = {
       id: user.uid,
       email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      displayName: user.FirstName,
+      // firstName: user.firstName,
+      // lastName: user.lastName,
+      displayName: user.displayName,
       photoUrl: user.photoURL,
     }
     return userRef.set(userState, {

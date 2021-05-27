@@ -24,6 +24,10 @@ export class ChatInputComponent implements OnInit {
     return this.chatInputForm.value.newMessageText;
   }
 
+  set newMessageText(value: string) {
+    this.f.newMessageText.setValue(value);
+  }
+
   get f() {
     return this.chatInputForm.controls;
   }

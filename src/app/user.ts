@@ -1,7 +1,7 @@
 export class User {
   id?: string;
-  firstName: string;
-  lastName: string;
+  firstName?: string;
+  lastName?: string;
   displayName?: string;
   email?: string | null | undefined;
   photoUrl?: string;

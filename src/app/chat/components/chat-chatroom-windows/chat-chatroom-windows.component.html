@@ -2,7 +2,7 @@
   <ng-container *ngIf="!chatroom else chatMessages">
     <div class="select-room">
       <div class="select-room-message">
-        Select a Room
+        <strong>Select a Room</strong>
       </div>
     </div>
   </ng-container>
@@ -10,7 +10,7 @@
 
 <ng-template #chatMessages>
   <app-chat-chatroom-title-bar [title]="chatroom.name"></app-chat-chatroom-title-bar>
-  <div class="message-wrapper" #scrollcontainer>
+  <div class="message-wrapper" #scrollContainer>
     <ng-container *ngFor="let message in messages">
       <app-chat-chatroom-message [message]="message"></app-chat-chatroom-message>
     </ng-container>

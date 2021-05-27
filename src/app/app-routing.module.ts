@@ -9,52 +9,18 @@ import { ChatComponent } from './chat/chat.component';
 import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
-  {
-    path: 'dashboard',
-    component: DashboardComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'chat',
-    component: ChatComponent,
-    canActivate: [AuthGuard],
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'chat', canActivate: [AuthGuard],
     children: [
-      {
-        path: '',
-        component: ChatComponent
-      },
-      {
-        path: ':chatroomId',
-        component: ChatComponent
-      },
+      { path: '', component: ChatComponent },
+      { path: ':chatroomId', component: ChatComponent }
     ]
   },
-  {
-    path: 'about',
-    component: AboutComponent,
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-  },
-  {
-    path: 'signup',
-    component: SignupComponent,
-  },
-  {
-    path: 'home',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
-  },
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
-  {
-    path: '*',
-    component: NotfoundComponent
-  }
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

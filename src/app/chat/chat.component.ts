@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalStorageService } from '../local-storage.service';
 
 @Component({
   selector: 'app-chat',
@@ -7,12 +6,10 @@ import { LocalStorageService } from '../local-storage.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  currentUser: any = null;
 
-  constructor(private ls: LocalStorageService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.currentUser = this.ls.getItem('user');
   }
 
 }

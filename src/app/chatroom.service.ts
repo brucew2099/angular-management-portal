@@ -13,8 +13,8 @@ export class ChatroomService {
 
   chatrooms: Observable<any>;
   changeChatroom: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-  selectedChatroom: Observable<any> = new Observable<any>();
-  selectedChatroomMessages: Observable<any> = new Observable<any>();
+  selectedChatroom: Observable<any>;
+  selectedChatroomMessages: Observable<any>;
 
   constructor(private db: AngularFirestore, private loadingService: LoadingService, private auth: AuthService) {
     this.selectedChatroom = this.changeChatroom.pipe(switchMap(chatroomId => {
