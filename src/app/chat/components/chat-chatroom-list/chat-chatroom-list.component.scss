@@ -1,13 +1,13 @@
 @import '../../../../variables';
 
 .chatroom-list {
-  height: calc(100vh - 63px) !important;
+  height: calc(100vh - 65px) !important;
   width: 100%;
 
   .chatroom-list-item {
     margin-top: 0.5em;
     margin-bottom: 0.4em;
-    padding: 1.5em 6em 0em 1em;
+    padding: 2em 6em 0em 1em;
 
     .actual-room {
       margin-left: 20px;

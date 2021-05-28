@@ -2,7 +2,7 @@ import { User } from './user';
 
 export class Message {
   message: string;
-  createdAt: Date;
+  createdAt: any;
   sender: User;
 
   constructor({message, createdAt, sender}: any) {

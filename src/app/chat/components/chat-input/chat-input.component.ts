@@ -33,7 +33,7 @@ export class ChatInputComponent implements OnInit {
   }
 
   public submit(message: string): void {
-    console.log('New Message: ', message);
+    this.crs.createMessage(message);
     this.f.newMessageText.setValue('');
   }
 

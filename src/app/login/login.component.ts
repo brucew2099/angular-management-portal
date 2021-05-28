@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             this.hasError = true;
             this.errorMessage = ''
-          }, 5000);
+          }, 6000);
         }})
     );
 

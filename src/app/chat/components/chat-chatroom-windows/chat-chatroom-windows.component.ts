@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { Observable } from 'rxjs';
 import { ChatroomService } from 'src/app/chatroom.service';
 import { LoadingService } from 'src/app/loading.service';
+import { User } from 'src/app/user';
 
 @Component({
   selector: 'app-chat-chatroom-windows',
@@ -11,11 +12,11 @@ import { LoadingService } from 'src/app/loading.service';
   styleUrls: ['./chat-chatroom-windows.component.scss']
 })
 export class ChatChatroomWindowsComponent implements OnInit, OnDestroy, AfterViewChecked {
-  @ViewChild('scrollContainer') private _scrollContainer: ElementRef<any>;
+  @ViewChild('scrollContainer') private _scrollContainer: ElementRef;
 
   private _subscriptions: Subscription[] = [];
   chatroom: any;
-  messages: Observable<any>;
+  messages: any;
 
   constructor(private route: ActivatedRoute, private crs: ChatroomService, private ls: LoadingService) {
     this._subscriptions.push(
@@ -54,9 +55,7 @@ export class ChatChatroomWindowsComponent implements OnInit, OnDestroy, AfterVie
 
   private _scrollToBottom(): void {
     try {
-      if(this._scrollContainer) {
-        this._scrollContainer.nativeElement.scrollTop = this._scrollContainer.nativeElement.scrollHeight;
-      }
+      this._scrollContainer.nativeElement.scrollTop = this._scrollContainer.nativeElement.scrollHeight;
     }
     catch(error) {
       console.log(error.message);

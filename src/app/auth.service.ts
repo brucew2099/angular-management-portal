@@ -1,38 +1,32 @@
-import { Injectable, NgZone, OnInit } from '@angular/core';
-import { Observable, from } from 'rxjs';
+import { Injectable, OnInit } from '@angular/core';
+import { Observable, from, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from './user';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { LocalStorageService } from './local-storage.service';
+import { switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService implements OnInit {
 
-  userState: any | null = null;
-  userStateSnapshot: User | null = null;
+  userState: Observable<any | null>;
+  userStateSnapshot: User | null;
 
   constructor(private router: Router, private afAuth: AngularFireAuth,
-        private db: AngularFirestore, private ngZone: NgZone, private ls: LocalStorageService) {
-      this.afAuth.authState.subscribe(user => {
+        private db: AngularFirestore, private ls: LocalStorageService) {
+      this.userState = this.afAuth.authState.pipe(switchMap((user: any) => {
         if(user) {
-          this.userState = user;
-          localStorage.setItem('user', JSON.stringify(this.userState));
-          const juser = this.ls.getItem('user');
-          if(juser !== null && juser !== undefined) {
-            JSON.parse(juser);
-          }
+          localStorage.setItem('user', user);
+          return this.db.doc<User>(`users/${user.uid}`).valueChanges();
         }
         else {
           this.ls.setItem('user', '');
-          // const juser = this.ls.getItem('user');
-          // if(juser !== null && juser !== undefined) {
-          //   JSON.parse();
-          // }
+          return of(null);
         }
-      })
+      }));
 
       this._setUserSnapshot();
   }
@@ -44,14 +38,14 @@ export class AuthService implements OnInit {
     return from(this.afAuth.createUserWithEmailAndPassword(Email, Password).then(cred => {
       if(cred.user !== null && cred.user !== undefined) {
         const userRef: AngularFirestoreDocument<User> = this.db.doc(`users/${cred.user.uid}`);
-        const updatedUser: User = {
+        const updatedUser = {
           id: cred.user.uid,
           email: cred.user.email,
           firstName: 'Alan',
           lastName: 'Kwok',
           photoUrl: 'https://firebasestorage.googleapis.com/v0/b/manage-portal-79295.appspot.com/o/iggy_cr.png?alt=media&token=7d8c1b57-bbf0-45e5-bd40-e4b7cfd1c112'
         };
-        userRef.set(new User(updatedUser));
+        userRef.set(updatedUser);
         this._setUserData(cred.user)
         return true;
       }
@@ -68,10 +62,8 @@ export class AuthService implements OnInit {
   async login(Email:string, Password:string) {
     try {
       const result = await this.afAuth.signInWithEmailAndPassword(Email, Password);
-      // this.ngZone.run(() => {
-      //   this.router.navigate(['chat']);
-      // });
       this._setUserData(result.user);
+      this.ls.setItem('user', JSON.stringify(result.user));
       return true;
     } catch (error) {
       console.log(error.message);
@@ -86,13 +78,12 @@ export class AuthService implements OnInit {
     });
   }
 
-  get isLoggedIn(): boolean {
-    const juser = this.ls.getItem('user');
-    //let user: string = '';
+  isLoggedIn(): boolean {
+  const juser = this.ls.getItem('user');
     if(juser !== null && juser !== undefined && juser !== '') {
       return true;
     }
-    return  false;
+    return false;
   }
 
   private _setUserData(user: any) {
@@ -111,8 +102,8 @@ export class AuthService implements OnInit {
   }
 
   private _setUserSnapshot(): void {
-    if(this.userState !== null) {
-      this.userState.cast.subscribe((user: User) => {
+    if(this.userState !== null && this.userState !== undefined) {
+      this.userState.subscribe(user => {
         this.userStateSnapshot = user;
       });
     }

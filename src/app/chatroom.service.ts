@@ -19,7 +19,7 @@ export class ChatroomService {
   constructor(private db: AngularFirestore, private loadingService: LoadingService, private auth: AuthService) {
     this.selectedChatroom = this.changeChatroom.pipe(switchMap(chatroomId => {
       if(chatroomId) {
-        this.loadingService.isLoading.next(true);
+        //this.loadingService.isLoading.next(true);
         return db.doc(`chatrooms/${chatroomId}`).valueChanges();
       }
       return of(null);
@@ -27,7 +27,7 @@ export class ChatroomService {
 
     this.selectedChatroomMessages = this.changeChatroom.pipe(switchMap(chatroomId => {
       if(chatroomId) {
-        this.loadingService.isLoading.next(true);
+        //this.loadingService.isLoading.next(true);
         return db.collection(`chatrooms/${chatroomId}/messages`, ref => {
           return ref.orderBy('createdAt', 'desc').limit(100);
         }).valueChanges().pipe(map(arr => arr.reverse()));
@@ -42,7 +42,7 @@ export class ChatroomService {
     const chatroomId = this.changeChatroom.value;
     const message = {
       message: text,
-      createdAt:  new Date(),
+      createdAt: new Date(),
       sender: this.auth.userStateSnapshot,
     };
 

@@ -9,9 +9,15 @@ import { Message } from '../../../message';
 export class ChatChatroomMessageComponent implements OnInit {
   @Input() message: Message;
 
+  created: any;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  convertDate() {
+    return this.message.createdAt.seconds * 1000;
   }
 
 }

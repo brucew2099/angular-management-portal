@@ -62,7 +62,7 @@
             <span class="ml5">
               <span id="project-title">Angular Management Portal</span>
             </span>
-            <div class="menu-spacer" *ngIf="isLoggedIn else loggedOut">
+            <div class="menu-spacer" *ngIf="auth.isLoggedIn() else loggedOut">
               <a mat-button [routerLink]="'chat'">
                 <mat-icon class="icon">home</mat-icon>
                 <span class="navMenu">Home</span>

@@ -11,8 +11,10 @@
 <ng-template #chatMessages>
   <app-chat-chatroom-title-bar [title]="chatroom.name"></app-chat-chatroom-title-bar>
   <div class="message-wrapper" #scrollContainer>
-    <ng-container *ngFor="let message in messages">
-      <app-chat-chatroom-message [message]="message"></app-chat-chatroom-message>
+    <ng-container *ngIf="messages">
+      <div *ngFor="let message of messages">
+        <app-chat-chatroom-message [message]="message"></app-chat-chatroom-message>
+      </div>
     </ng-container>
   </div>
   <app-chat-input></app-chat-input>

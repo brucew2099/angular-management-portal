@@ -20,7 +20,7 @@ const routes: Routes = [
       { path: ':chatroomId', component: ChatComponent }
     ]
   },
-  { path: '**', redirectTo: 'login' }
+  { path: '**', component: NotfoundComponent }
 ];
 
 @NgModule({
