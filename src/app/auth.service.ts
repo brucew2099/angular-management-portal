@@ -41,12 +41,15 @@ export class AuthService implements OnInit {
         const updatedUser = {
           id: cred.user.uid,
           email: cred.user.email,
-          firstName: 'Alan',
-          lastName: 'Kwok',
-          photoUrl: 'https://firebasestorage.googleapis.com/v0/b/manage-portal-79295.appspot.com/o/iggy_cr.png?alt=media&token=7d8c1b57-bbf0-45e5-bd40-e4b7cfd1c112'
+          firstName: FirstName,
+          lastName: LastName,
+          displayName: FirstName,
+          photoUrl: 'https://firebasestorage.googleapis.com/v0/b/manage-portal-79295.appspot.com/o/default.png?alt=media&token=0db5e84b-bacf-4781-b03f-bd26c1ed7e21'
         };
-        userRef.set(updatedUser);
-        this._setUserData(cred.user)
+        userRef.set(updatedUser, {
+          merge: true
+        });
+        // this._setUserData(updatedUser)
         return true;
       }
       else {
@@ -62,8 +65,10 @@ export class AuthService implements OnInit {
   async login(Email:string, Password:string) {
     try {
       const result = await this.afAuth.signInWithEmailAndPassword(Email, Password);
-      this._setUserData(result.user);
-      this.ls.setItem('user', JSON.stringify(result.user));
+      //this._setUserData(result.user);
+      if(!this.ls.isValid('user')) {
+        this.ls.setItem('user', JSON.stringify(result.user));
+      }
       return true;
     } catch (error) {
       console.log(error.message);
@@ -80,7 +85,8 @@ export class AuthService implements OnInit {
 
   isLoggedIn(): boolean {
   const juser = this.ls.getItem('user');
-    if(juser !== null && juser !== undefined && juser !== '') {
+    if(juser !== null && juser !== undefined && juser !== '' &&
+        this.router.url !== '/' && window.location.href.indexOf('/login') < 0) {
       return true;
     }
     return false;
@@ -89,12 +95,12 @@ export class AuthService implements OnInit {
   private _setUserData(user: any) {
     const userRef: AngularFirestoreDocument<any> = this.db.doc(`users/${user.uid}`);
     const userState: User = {
-      id: user.uid,
+      id: user.id,
       email: user.email,
-      // firstName: user.firstName,
-      // lastName: user.lastName,
+      firstName: user.firstName,
+      lastName: user.lastName,
       displayName: user.displayName,
-      photoUrl: user.photoURL,
+      photoUrl: user.photoUrl,
     }
     return userRef.set(userState, {
       merge: true

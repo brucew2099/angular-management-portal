@@ -26,4 +26,10 @@ export class LocalStorageService {
   public length():number {
     return localStorage.length;
   }
+
+  public isValid(key: string): boolean {
+    return (localStorage.getItem(key) !== null &&
+        localStorage.getItem(key) !== undefined &&
+        localStorage.getItem(key) !== '');
+  }
 }

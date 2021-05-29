@@ -55,7 +55,9 @@ export class ChatChatroomWindowsComponent implements OnInit, OnDestroy, AfterVie
 
   private _scrollToBottom(): void {
     try {
-      this._scrollContainer.nativeElement.scrollTop = this._scrollContainer.nativeElement.scrollHeight;
+      if(this._scrollContainer !== undefined && this._scrollContainer !== null) {
+        this._scrollContainer.nativeElement.scrollTop = this._scrollContainer.nativeElement.scrollHeight;
+      }
     }
     catch(error) {
       console.log(error.message);

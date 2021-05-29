@@ -40,12 +40,12 @@ export class ChatroomService {
 
   createMessage(text: string) {
     const chatroomId = this.changeChatroom.value;
-    const message = {
+    const cmessage = {
       message: text,
       createdAt: new Date(),
       sender: this.auth.userStateSnapshot,
     };
 
-    this.db.collection(`chatrooms/${chatroomId}/messages`).add(message);
+    this.db.collection(`chatrooms/${chatroomId}/messages`).add(cmessage);
   }
 }

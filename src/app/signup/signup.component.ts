@@ -91,7 +91,7 @@ export class SignupComponent implements OnInit, OnDestroy {
     this._subscriptions.push(
       this.auth.signup(email, password, firstName, lastName).subscribe(success => {
         if(typeof(success) === 'boolean' && success) {
-          this.router.navigate(['/chat']);
+          this.router.navigate(['chat']);
         }
         else {
           this.hasError = true;
