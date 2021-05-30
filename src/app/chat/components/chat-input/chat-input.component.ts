@@ -20,17 +20,15 @@ export class ChatInputComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  get newMessageText() {
-    return this.chatInputForm.value.newMessageText;
-  }
-
   get f() {
     return this.chatInputForm.controls;
   }
 
   public submit(message: string): void {
-    this.crs.createMessage(message);
-    this.f.newMessageText.setValue('');
+    if(message !== '') {
+      this.crs.createMessage(message);
+      this.f.newMessageText.reset('');
+    }
   }
 
 }

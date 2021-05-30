@@ -34,6 +34,8 @@ import { AngularFireModule } from '@angular/fire';
 import { NavmenuComponent } from './navmenu/navmenu.component';
 import { LocalStorageService } from './local-storage.service';
 import { ChatroomService } from './chatroom.service';
+import { SearchService } from './search.service';
+import { SearchDialogComponent } from './search-dialog/search-dialog.component';
 
 
 const ngxLoadingXConfig: NgxLoadingXConfig = {
@@ -68,6 +70,7 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     ChatChatroomMessageComponent,
     ChatChatroomWindowsComponent,
     NavmenuComponent,
+    SearchDialogComponent
 
   ],
   imports: [
@@ -83,7 +86,8 @@ const ngxLoadingXConfig: NgxLoadingXConfig = {
     AngularFirestoreModule,
     AngularFireStorageModule
   ],
-  providers: [ValidationService, LoadingService, AuthService, AuthGuard, LocalStorageService, ChatroomService],
+  providers: [ValidationService, LoadingService, AuthService,
+                AuthGuard, LocalStorageService, ChatroomService, SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

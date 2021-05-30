@@ -85,11 +85,7 @@ export class AuthService implements OnInit {
 
   isLoggedIn(): boolean {
   const juser = this.ls.getItem('user');
-    if(juser !== null && juser !== undefined && juser !== '' &&
-        this.router.url !== '/' && window.location.href.indexOf('/login') < 0) {
-      return true;
-    }
-    return false;
+    return juser !== null && juser !== undefined && juser !== '';
   }
 
   private _setUserData(user: any) {

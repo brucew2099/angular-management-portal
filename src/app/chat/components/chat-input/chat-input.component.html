@@ -1,10 +1,10 @@
 <div class="new-message-wrapper">
   <form [formGroup]="chatInputForm">
-      <input intInput formControlName="newMessageText" type="text" placeholder="Enter a new message"
-          (keyup.enter)="submit(newMessage.value)" id="newMessageText" #newMessage>
+      <input intInput type="text" placeholder="Enter a new message" formControlName="newMessageText"
+          (keyup.enter)="submit(newMessage.value)" id="newMessageText" #newMessage required>
       <div class="input-group-append">
         <button mat-raised-button color="standard" (click)="submit(newMessage.value)"
-            [disabled]="f.newMessageText.invalid" id="message-button">Enter</button>
+            id="message-button">Enter</button>
       </div>
   </form>
 </div>

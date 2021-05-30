@@ -6,6 +6,7 @@ import { Subscription, from } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { HelpDialogComponent } from '../help-dialog/help-dialog.component';
 import { LoadingService } from '../loading.service';
+import { LocalStorageService } from '../local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +37,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   (f) Does NOT contain any white space`;
 
   constructor(private fb: FormBuilder, private dialog: MatDialog, private loadingService: LoadingService,
-        private auth:AuthService, private route: ActivatedRoute, private router:Router) {
+        private auth:AuthService, private route: ActivatedRoute, private router:Router,
+        private localStorageService: LocalStorageService) {
     this.loginForm = this.fb.group({
       email: ['',[Validators.required, Validators.email]],
       password: ['',[Validators.required, Validators.minLength(8), Validators.maxLength(25),
@@ -46,6 +48,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/chat';
+
+    setTimeout (() => {
+      this.localStorageService.setItem('user', '');
+    }, 1500);
   }
 
   ngOnDestroy(): void {

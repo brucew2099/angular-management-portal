@@ -44,6 +44,7 @@ export class ChatroomService {
       message: text,
       createdAt: new Date(),
       sender: this.auth.userStateSnapshot,
+      chatroom: chatroomId
     };
 
     this.db.collection(`chatrooms/${chatroomId}/messages`).add(cmessage);

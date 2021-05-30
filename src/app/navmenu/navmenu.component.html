@@ -92,16 +92,16 @@
                 <button value='theme3' mat-menu-item (click)="switchTheme('theme3')">Orange</button>
               </mat-menu>
             </div>
-            <div id="searchDiv">
+            <div id="searchDiv" *ngIf="auth.isLoggedIn() && isChat()">
               <form [formGroup]="navForm">
                 <mat-form-field appearance="legacy" id="searchBar">
                   <input type="text" matInput formControlName="search" [matAutocomplete]="auto"
                       placeholder="Search" (keyup.enter)="searchMe()">
                   <mat-icon matSuffix [inline]="true">search</mat-icon>
                   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let author of filteredAuthors | async" [value]="author">
+                    <!-- <mat-option *ngFor="let author of filteredAuthors | async" [value]="author">
                       {{ author }}
-                    </mat-option>
+                    </mat-option> -->
                   </mat-autocomplete>
                 </mat-form-field>
               </form>

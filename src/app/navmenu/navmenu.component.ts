@@ -4,8 +4,12 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { LoadingService } from '../loading.service';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../auth.service';
 import { LocalStorageService } from '../local-storage.service';
+import { SearchService } from '../search.service';
+import { SearchDialogComponent } from '../search-dialog/search-dialog.component';
+import { Message } from '../message';
 
 @Component({
   selector: 'app-navmenu',
@@ -21,34 +25,26 @@ export class NavmenuComponent implements OnInit, OnDestroy {
   private _subscriptions: Subscription[] = [];
 
   navForm: FormGroup;
-  allAuthors = [
-    { id: 101, name: 'Godaan', writer: 'Premchand' },
-    { id: 102, name: 'Karmabhoomi', writer: 'Premchand' },
-    { id: 103, name: 'Pinjar', writer: 'Amrita Pritam' },
-    { id: 104, name: 'Kore Kagaz', writer: 'Amrita Pritam' },
-    { id: 105, name: 'Nirmala', writer: 'Premchand' },
-    { id: 106, name: 'Seva Sadan', writer: 'Premchand' }
-  ];
-  filteredAuthors: Observable<string[]>;
-  authors:string[] = [];
+  filteredMessages: Observable<string[]>;
+  messages: Message[];
 
   constructor(private fb:FormBuilder, private ls: LoadingService, public auth: AuthService,
-        private localStorage: LocalStorageService) {
+        private localStorage: LocalStorageService, private ss: SearchService, private dialog: MatDialog) {
     this.navForm = this.fb.group({
       search: ['',[]]
     });
 
-    this.filteredAuthors = this.f.search.valueChanges.pipe(
-      startWith(''),
-      map((author: string) => this._filter(author))
-    );
+    // this.messages = this.ss.findMessages().subscribe(data => {
+
+    // });
+
+    // this.filteredMessages = this.f.search.valueChanges.pipe(
+    //   startWith(''),
+    //   map((author: string) => this._filter(author))
+    // );
   }
 
   ngOnInit(): void {
-    for(let index in this.allAuthors) {
-      this.authors.push(this.allAuthors[index].name);
-    }
-
     this._subscriptions.push(
       this.ls.isLoading.subscribe(isLoading => {
         this.loading = isLoading;
@@ -66,6 +62,22 @@ export class NavmenuComponent implements OnInit, OnDestroy {
     return this.navForm.value.search;
   }
 
+  // searchByName(searchValue: string){
+  //   let value = searchValue.toLowerCase();
+  //   this.ss.searchUsers(value)
+  //   .subscribe(result => {
+  //     this.name_filtered_items = result;
+  //     this.items = this.combineLists(result, this.age_filtered_items);
+  //   })
+  // }
+
+  openDialog():void {
+    const dialogRef = this.dialog.open(SearchDialogComponent, {
+      width: '550px',
+      data: {title: 'Search Results', header: 'Messages'}
+    });
+  }
+
   get f() {
     return this.navForm.controls;
   }
@@ -75,13 +87,17 @@ export class NavmenuComponent implements OnInit, OnDestroy {
     return object ? object : undefined;
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.authors.filter(author => author.toLowerCase().includes(filterValue));
+  // private _filter(value: string): string[] {
+  //   const filterValue = value.toLowerCase();
+  //   return this.authors.filter(author => author.toLowerCase().includes(filterValue));
+  // }
+
+  isChat(): boolean {
+    return window.location.href.indexOf('/chat') >= 0;
   }
 
   searchMe() {
-    alert(this.search);
+    this.search
   }
 
   switchTheme(appId: string) {
