@@ -1,5 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { LoadingService } from '../loading.service';
@@ -25,18 +26,18 @@ export class NavmenuComponent implements OnInit, OnDestroy {
   private _subscriptions: Subscription[] = [];
 
   navForm: FormGroup;
-  filteredMessages: Observable<string[]>;
-  messages: Message[];
+  filteredMessages: Message[] = [];
+  chatroomId: string = '';
+  searchValue: string = '';
+
+  content: string = '';
 
   constructor(private fb:FormBuilder, private ls: LoadingService, public auth: AuthService,
-        private localStorage: LocalStorageService, private ss: SearchService, private dialog: MatDialog) {
+        private localStorage: LocalStorageService, private ss: SearchService, private dialog: MatDialog,
+        private loc: Location) {
     this.navForm = this.fb.group({
       search: ['',[]]
     });
-
-    // this.messages = this.ss.findMessages().subscribe(data => {
-
-    // });
 
     // this.filteredMessages = this.f.search.valueChanges.pipe(
     //   startWith(''),
@@ -62,19 +63,24 @@ export class NavmenuComponent implements OnInit, OnDestroy {
     return this.navForm.value.search;
   }
 
-  // searchByName(searchValue: string){
-  //   let value = searchValue.toLowerCase();
-  //   this.ss.searchUsers(value)
-  //   .subscribe(result => {
-  //     this.name_filtered_items = result;
-  //     this.items = this.combineLists(result, this.age_filtered_items);
-  //   })
-  // }
+  private _searchMessages(){
+    this.ss.searchMessages(this.chatroomId, this.searchValue).subscribe(msgs => {
+      for(let msg of msgs) {
+        let temp = new Date(msg.createdAt * 1000);
+        let date = temp.toDateString();
+        let time = temp.getTime();
+        this.content += 'From: ' + msg.sender.firstName + ' ' + msg.sender.lastName;
+        this.content += '\nDatetime: ' + date + ' ' + time;
+        this.content += '\nChatroom ID: ' + msg.chatroomId;
+        this.content += '\nMessage: ' + msg.message + '\n\n';
+      }
+    });
+  }
 
   openDialog():void {
     const dialogRef = this.dialog.open(SearchDialogComponent, {
       width: '550px',
-      data: {title: 'Search Results', header: 'Messages'}
+      data: {title: 'Search Results', header: 'Messages', content: this.content}
     });
   }
 
@@ -97,7 +103,14 @@ export class NavmenuComponent implements OnInit, OnDestroy {
   }
 
   searchMe() {
-    this.search
+    let path = this.loc.path();
+    let chatroomId = path.substring(path.lastIndexOf('/') + 1);
+    this.chatroomId = chatroomId;
+    this.searchValue = this.f.search.value.toLowerCase();
+    this._searchMessages();
+    setTimeout(() => {
+      this.openDialog();
+    }, 1000);
   }
 
   switchTheme(appId: string) {

@@ -2,14 +2,16 @@ import { User } from './user';
 
 export class Message {
   message: string;
+  messageLower?: string;
   createdAt: any;
   sender: User;
-  chatroom?: string;
+  chatroomId?: string;
 
-  constructor({message, createdAt, sender, chatroom}: any) {
+  constructor({message, messageLower, createdAt, sender, chatroomId}: any) {
     this.message = message;
+    this.messageLower = messageLower;
     this.createdAt = createdAt;
     this.sender = new User(sender);
-    this.chatroom = chatroom;
+    this.chatroomId = chatroomId;
   }
 }

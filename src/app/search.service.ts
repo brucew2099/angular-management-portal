@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { LocalStorageService } from './local-storage.service';
-import { User } from './user';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
+import { Observable, Subject } from 'rxjs';
 import { Message } from './message';
 
 @Injectable({
@@ -10,19 +8,22 @@ import { Message } from './message';
 })
 export class SearchService {
 
-  private _dbpath: string = '/messages'
+  private _messageRef: AngularFirestoreCollection<Message>;
+  private _messages = new Subject<Message[]>();
 
   constructor(private db: AngularFirestore) { }
 
-  // getAllMessages() {
-  //   this.db.collection('messages', data => {
+  getMessages(): Observable<Message[]> {
+    return this._messages.asObservable();
+  }
 
-  //   })
-  // }
+  updateMessages(messages: Message[]): void {
+    this._messages.next(messages);
+  }
 
-  // searchUsers(searchValue){
-  //   return this.db.collection('users',ref => ref.where('nameToSearch', '>=', searchValue)
-  //     .where('nameToSearch', '<=', searchValue + '\uf8ff'))
-  //     .snapshotChanges()
-  // }
+  searchMessages(chatroomId: string, searchValue: string): Observable<Message[]> {
+    return this.db.collection<Message>(`chatrooms/${chatroomId}/messages`, ref => {
+        return ref.where('messageLower', '>=', searchValue);
+    }).valueChanges();
+  };
 }

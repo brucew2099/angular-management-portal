@@ -42,9 +42,10 @@ export class ChatroomService {
     const chatroomId = this.changeChatroom.value;
     const cmessage = {
       message: text,
+      messageLower: text.toLowerCase().replace(/[^0-9a-z_']/gi, ' '),
       createdAt: new Date(),
       sender: this.auth.userStateSnapshot,
-      chatroom: chatroomId
+      chatroomId: chatroomId
     };
 
     this.db.collection(`chatrooms/${chatroomId}/messages`).add(cmessage);

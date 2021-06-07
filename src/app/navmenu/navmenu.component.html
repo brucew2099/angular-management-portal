@@ -99,9 +99,9 @@
                       placeholder="Search" (keyup.enter)="searchMe()">
                   <mat-icon matSuffix [inline]="true">search</mat-icon>
                   <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                    <!-- <mat-option *ngFor="let author of filteredAuthors | async" [value]="author">
-                      {{ author }}
-                    </mat-option> -->
+                    <mat-option *ngFor="let message of filteredMessages">
+                      {{ message }}
+                    </mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
               </form>
